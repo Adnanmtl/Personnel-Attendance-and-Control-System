@@ -1,0 +1,30 @@
+services:
+  # The REST API application container
+  api:
+    build: ./app
+    container_name: pdks_api
+    ports:
+      - "80:3000"   # Direct HTTP access on port 80
+      - "3000:3000" # Expose local port 3000 for direct API access
+    volumes:
+      - ./app:/usr/src/app
+      - /usr/src/app/node_modules
+    depends_on:
+      - db
+
+  # The PostgreSQL Database container
+  db:
+    image: postgres
+    container_name: pdks_db
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql
+      - ./db-init:/docker-entrypoint-initdb.d # Runs SQL initialization on first startup
+
+volumes:
+  pgdata:

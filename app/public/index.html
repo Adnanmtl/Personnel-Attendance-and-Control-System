@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PDKS - Admin Control Panel | Cevher Digital</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Login Screen Overlay -->
+  <div class="login-overlay active" id="loginOverlay">
+    <div class="login-card glass-card">
+      <div class="login-brand">
+        <div class="brand-logo shadow-glow">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <rect width="18" height="18" x="3" y="3" rx="2" ry="2"/>
+            <path d="M7 7h10"/>
+            <path d="M7 12h10"/>
+            <path d="M7 17h10"/>
+          </svg>
+        </div>
+        <h2>PDKS Admin Login</h2>
+        <p>Cevher Digital Personnel Control System</p>
+      </div>
+
+      <form id="loginForm">
+        <div class="form-group">
+          <label for="loginUsername">Username</label>
+          <input type="text" id="loginUsername" placeholder="Enter username" required autofocus>
+        </div>
+
+        <div class="form-group">
+          <label for="loginPassword">Password</label>
+          <input type="password" id="loginPassword" placeholder="Enter password" required>
+        </div>
+
+        <div class="login-error-msg" id="loginErrorMsg"></div>
+
+        <button type="submit" class="btn btn-primary btn-block btn-lg" id="loginSubmitBtn">
+          Sign In to Admin Panel
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <div class="app-layout">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-logo">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <rect width="18" height="18" x="3" y="3" rx="2" ry="2"/>
+            <path d="M7 7h10"/>
+            <path d="M7 12h10"/>
+            <path d="M7 17h10"/>
+          </svg>
+        </div>
+        <div class="brand-info">
+          <h2>PDKS Admin</h2>
+          <span class="brand-subtitle">Cevher Digital v1.2</span>
+        </div>
+      </div>
+
+      <nav class="nav-menu">
+        <button class="nav-item active" data-tab="dashboard">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect width="7" height="9" x="3" y="3" rx="1"/>
+            <rect width="7" height="5" x="14" y="3" rx="1"/>
+            <rect width="7" height="9" x="14" y="12" rx="1"/>
+            <rect width="7" height="5" x="3" y="16" rx="1"/>
+          </svg>
+          <span>Dashboard</span>
+        </button>
+
+        <button class="nav-item" data-tab="workers">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+          <span>Registered Workers</span>
+        </button>
+
+        <button class="nav-item" data-tab="logs">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 8v4l3 3"/>
+            <circle cx="12" cy="12" r="10"/>
+          </svg>
+          <span>Attendance Logs</span>
+        </button>
+
+        <button class="nav-item" data-tab="accounts">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+          <span>Admin Accounts</span>
+        </button>
+
+        <button class="nav-item" data-tab="settings">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.38a2 2 0 0 0-.73-2.73l-.15-.10a2 2 0 0 1-1-1.72v-.51a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/>
+            <circle cx="12" cy="12" r="3"/>
+          </svg>
+          <span>System Settings</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="server-status-pill online" id="serverStatusPill">
+          <span class="status-dot"></span>
+          <span id="serverStatusText">System Connected</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-wrapper">
+      <!-- Top Navbar Header -->
+      <header class="top-header">
+        <div class="header-left">
+          <h1 id="pageTitle">System Overview</h1>
+          <p id="pageSubTitle">Real-time attendance & RFID access monitor</p>
+        </div>
+
+        <div class="header-right">
+          <div class="user-badge" id="loggedInUserBadge">
+            <span class="user-avatar">👤</span>
+            <span id="loggedInUsername">adnan</span>
+          </div>
+
+          <div class="live-clock">
+            <span class="clock-icon">🕒</span>
+            <span id="currentTime">00:00:00</span>
+          </div>
+
+          <div class="auto-refresh-box">
+            <label class="switch">
+              <input type="checkbox" id="autoRefreshToggle" checked>
+              <span class="slider round"></span>
+            </label>
+            <span class="refresh-label">Live Sync (5s)</span>
+          </div>
+
+          <button class="btn btn-secondary btn-sm" id="globalRefreshBtn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+              <path d="M3 3v5h5"/>
+              <path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/>
+              <path d="M16 16h5v5"/>
+            </svg>
+            Refresh
+          </button>
+
+          <button class="btn btn-danger btn-sm" id="logoutBtn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+              <polyline points="16 17 21 12 16 7"/>
+              <line x1="21" y1="12" x2="9" y2="12"/>
+            </svg>
+            Logout
+          </button>
+        </div>
+      </header>
+
+      <!-- Content Views -->
+      <div class="content-container">
+        <!-- Unknown RFID Card Alert Notification Container -->
+        <div class="unknown-alerts-container" id="unknownAlertsContainer"></div>
+        
+        <!-- View 1: DASHBOARD -->
+        <section class="tab-view active" id="view-dashboard">
+          <!-- Metrics Overview Cards -->
+          <div class="metrics-grid">
+            <div class="metric-card glass-card">
+              <div class="card-icon bg-indigo">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                  <circle cx="9" cy="7" r="4"/>
+                  <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                </svg>
+              </div>
+              <div class="metric-info">
+                <span class="metric-label">Total Registered Workers</span>
+                <h3 class="metric-value" id="statTotalWorkers">0</h3>
+                <span class="metric-hint">Active database profiles</span>
+              </div>
+            </div>
+
+            <div class="metric-card glass-card">
+              <div class="card-icon bg-emerald">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+                  <polyline points="10 17 15 12 10 7"/>
+                  <line x1="15" y1="12" x2="3" y2="12"/>
+                </svg>
+              </div>
+              <div class="metric-info">
+                <span class="metric-label">Currently Checked-IN</span>
+                <h3 class="metric-value text-emerald" id="statPresent">0</h3>
+                <span class="metric-hint">Workers inside facility</span>
+              </div>
+            </div>
+
+            <div class="metric-card glass-card">
+              <div class="card-icon bg-amber">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect width="18" height="18" x="3" y="4" rx="2" ry="2"/>
+                  <line x1="16" y1="2" x2="16" y2="6"/>
+                  <line x1="8" y1="2" x2="8" y2="6"/>
+                  <line x1="3" y1="10" x2="21" y2="10"/>
+                </svg>
+              </div>
+              <div class="metric-info">
+                <span class="metric-label">Today's Total Scans</span>
+                <h3 class="metric-value" id="statScansToday">0</h3>
+                <span class="metric-hint">Clock-in/out RFID events</span>
+              </div>
+            </div>
+
+            <div class="metric-card glass-card">
+              <div class="card-icon bg-purple">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="2" y="2" width="20" height="8" rx="2" ry="2"/>
+                  <rect x="2" y="14" width="20" height="8" rx="2" ry="2"/>
+                  <line x1="6" y1="6" x2="6.01" y2="6"/>
+                  <line x1="6" y1="18" x2="6.01" y2="18"/>
+                </svg>
+              </div>
+              <div class="metric-info">
+                <span class="metric-label">Active ESP32 Scanners</span>
+                <h3 class="metric-value" id="statActiveDevices">0</h3>
+                <span class="metric-hint">Connected hardware units</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Actions & Live Scan Activity -->
+          <div class="dashboard-grid">
+            <div class="dashboard-card glass-card span-2">
+              <div class="card-header">
+                <div class="header-title">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+                  </svg>
+                  <h3>Recent Scan Activity Feed</h3>
+                </div>
+                <button class="btn btn-text btn-sm" id="viewAllLogsBtn">View Full Logs →</button>
+              </div>
+
+              <div class="scan-feed-list" id="recentScansFeed">
+                <div class="empty-state">Loading recent scan records...</div>
+              </div>
+            </div>
+
+            <div class="dashboard-card glass-card">
+              <div class="card-header">
+                <div class="header-title">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                  </svg>
+                  <h3>Quick Admin Actions</h3>
+                </div>
+              </div>
+
+              <div class="quick-actions-list">
+                <button class="action-btn" id="quickAddWorkerBtn">
+                  <div class="action-icon bg-indigo">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                      <circle cx="9" cy="7" r="4"/>
+                      <line x1="19" y1="8" x2="19" y2="14"/>
+                      <line x1="16" y1="11" x2="22" y2="11"/>
+                    </svg>
+                  </div>
+                  <div class="action-text">
+                    <strong>Register Worker</strong>
+                    <span>Add new RFID tag & worker info</span>
+                  </div>
+                </button>
+
+                <button class="action-btn" id="quickManualPunchBtn">
+                  <div class="action-icon bg-emerald">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <circle cx="12" cy="12" r="10"/>
+                      <polyline points="12 6 12 12 16 14"/>
+                    </svg>
+                  </div>
+                  <div class="action-text">
+                    <strong>Manual Clock In/Out</strong>
+                    <span>Log attendance punch for worker</span>
+                  </div>
+                </button>
+
+                <button class="action-btn" id="quickExportBtn">
+                  <div class="action-icon bg-amber">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                      <polyline points="7 10 12 15 17 10"/>
+                      <line x1="12" y1="15" x2="12" y2="3"/>
+                    </svg>
+                  </div>
+                  <div class="action-text">
+                    <strong>Export Logs CSV</strong>
+                    <span>Download full attendance history</span>
+                  </div>
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- View 2: WORKERS MANAGEMENT -->
+        <section class="tab-view" id="view-workers">
+          <div class="table-card glass-card">
+            <div class="table-toolbar">
+              <div class="search-box">
+                <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="11" cy="11" r="8"/>
+                  <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                </svg>
+                <input type="text" id="workerSearchInput" placeholder="Search by name, surname, or Card ID...">
+              </div>
+
+              <div class="toolbar-actions">
+                <select id="workerStatusFilter" class="form-select">
+                  <option value="ALL">All Account Statuses</option>
+                  <option value="ACTIVE" selected>Active Workers Only</option>
+                  <option value="PASSIVE">Passive Workers Only</option>
+                </select>
+
+                <button class="btn btn-primary" id="addWorkerModalBtn">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="12" y1="5" x2="12" y2="19"/>
+                    <line x1="5" y1="12" x2="19" y2="12"/>
+                  </svg>
+                  Add Worker
+                </button>
+              </div>
+            </div>
+
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Worker Name</th>
+                    <th>RFID Card ID</th>
+                    <th>Account Status</th>
+                    <th>Attendance State</th>
+                    <th>Last Scan Timestamp</th>
+                    <th class="text-right">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="workersTableBody">
+                  <tr>
+                    <td colspan="6" class="table-loading">Loading workers data...</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- View 3: ATTENDANCE LOGS -->
+        <section class="tab-view" id="view-logs">
+          <div class="table-card glass-card">
+            <div class="table-toolbar">
+              <div class="search-box">
+                <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="11" cy="11" r="8"/>
+                  <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                </svg>
+                <input type="text" id="logsSearchInput" placeholder="Filter by card ID, worker name...">
+              </div>
+
+              <div class="toolbar-actions">
+                <select id="logsDirectionFilter" class="form-select">
+                  <option value="ALL">All Directions</option>
+                  <option value="IN">Direction: IN</option>
+                  <option value="OUT">Direction: OUT</option>
+                </select>
+
+                <button class="btn btn-secondary" id="manualScanModalBtn">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="12" y1="5" x2="12" y2="19"/>
+                    <line x1="5" y1="12" x2="19" y2="12"/>
+                  </svg>
+                  Manual Log
+                </button>
+
+                <button class="btn btn-outline" id="exportCsvBtn">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                    <polyline points="7 10 12 15 17 10"/>
+                    <line x1="12" y1="15" x2="12" y2="3"/>
+                  </svg>
+                  CSV Export
+                </button>
+              </div>
+            </div>
+
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Log ID</th>
+                    <th>Scanned At</th>
+                    <th>Worker Name</th>
+                    <th>Card ID</th>
+                    <th>Direction</th>
+                    <th>Scanner Serial</th>
+                    <th>IP Address</th>
+                  </tr>
+                </thead>
+                <tbody id="logsTableBody">
+                  <tr>
+                    <td colspan="7" class="table-loading">Loading attendance logs...</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="table-pagination">
+              <span id="paginationInfo">Showing 0 of 0 records</span>
+              <div class="pagination-buttons">
+                <button class="btn btn-sm btn-secondary" id="prevPageBtn" disabled>← Previous</button>
+                <span class="page-num" id="currentPageNum">Page 1</span>
+                <button class="btn btn-sm btn-secondary" id="nextPageBtn" disabled>Next →</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- View 4: ADMIN ACCOUNTS MANAGEMENT -->
+        <section class="tab-view" id="view-accounts">
+          <div class="table-card glass-card">
+            <div class="table-toolbar">
+              <div class="toolbar-title">
+                <h3>Registered Admin User Accounts</h3>
+                <p>Manage system entrance accounts and portal credentials</p>
+              </div>
+
+              <div class="toolbar-actions">
+                <button class="btn btn-primary" id="addAdminModalBtn">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="12" y1="5" x2="12" y2="19"/>
+                    <line x1="5" y1="12" x2="19" y2="12"/>
+                  </svg>
+                  Register Admin Account
+                </button>
+              </div>
+            </div>
+
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Account ID</th>
+                    <th>Username</th>
+                    <th>Created At</th>
+                    <th class="text-right">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="accountsTableBody">
+                  <tr>
+                    <td colspan="4" class="table-loading">Loading admin accounts...</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- View 5: SYSTEM SETTINGS -->
+        <section class="tab-view" id="view-settings">
+          <div class="settings-grid">
+            <div class="settings-card glass-card">
+              <div class="card-header">
+                <h3>API Key & Authentication</h3>
+              </div>
+              <div class="card-body">
+                <p class="settings-desc">Configure your API access token for security header authorization.</p>
+                <div class="form-group">
+                  <label for="apiKeyInput">X-Device-Token API Key</label>
+                  <div class="input-with-btn">
+                    <input type="password" id="apiKeyInput" placeholder="Enter API Key (e.g. dvc_NYWORq...)">
+                    <button class="btn btn-secondary" id="toggleApiKeyVisibility">Show</button>
+                  </div>
+                </div>
+                <button class="btn btn-primary" id="saveApiKeyBtn">Save Token</button>
+              </div>
+            </div>
+
+            <div class="settings-card glass-card">
+              <div class="card-header">
+                <h3>ESP32 RFID Scanner Integration</h3>
+              </div>
+              <div class="card-body">
+                <p class="settings-desc">ESP32 microcontrollers send POST requests to the PDKS endpoint:</p>
+                <div class="code-block">
+                  <code>POST /api/v1/request</code>
+                  <code>Header: X-Device-Token: &lt;API_KEY&gt;</code>
+                  <code>Payload: { "card_id": "46111307", "serial": "CDS-A3-001", "ip": "192.168.1.65", "fw": "1.1.1" }</code>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- Modals -->
+
+  <!-- Add Admin User Modal -->
+  <div class="modal-overlay" id="addAdminModal">
+    <div class="modal-dialog glass-card">
+      <div class="modal-header">
+        <h3>Register New Admin Account</h3>
+        <button class="close-btn" data-close="addAdminModal">&times;</button>
+      </div>
+      <form id="addAdminForm">
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="newAdminUsername">Username <span class="required">*</span></label>
+            <input type="text" id="newAdminUsername" placeholder="e.g. adnan" required>
+          </div>
+
+          <div class="form-group">
+            <label for="newAdminPassword">Password <span class="required">*</span></label>
+            <input type="password" id="newAdminPassword" placeholder="Enter secure password" required>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-close="addAdminModal">Cancel</button>
+          <button type="submit" class="btn btn-primary">Create Account</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Add Worker Modal -->
+  <div class="modal-overlay" id="addWorkerModal">
+    <div class="modal-dialog glass-card">
+      <div class="modal-header">
+        <h3>Register New Worker</h3>
+        <button class="close-btn" data-close="addWorkerModal">&times;</button>
+      </div>
+      <form id="addWorkerForm">
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="newCardId">RFID Card ID (UID) <span class="required">*</span></label>
+            <input type="text" id="newCardId" placeholder="e.g. 46111307 or 5E6F7G8H" required>
+            <span class="field-hint">Scanned RFID tag unique hex string</span>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="newName">First Name <span class="required">*</span></label>
+              <input type="text" id="newName" placeholder="e.g. Adnan" required>
+            </div>
+            <div class="form-group">
+              <label for="newSurname">Surname <span class="required">*</span></label>
+              <input type="text" id="newSurname" placeholder="e.g. Mutlu" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="newStatus">Account Status</label>
+            <select id="newStatus" class="form-select">
+              <option value="ACTIVE" selected>ACTIVE (Card Enabled)</option>
+              <option value="PASSIVE">PASSIVE (Card Disabled)</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-close="addWorkerModal">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Worker</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Edit Worker Modal -->
+  <div class="modal-overlay" id="editWorkerModal">
+    <div class="modal-dialog glass-card">
+      <div class="modal-header">
+        <h3>Edit Worker Details</h3>
+        <button class="close-btn" data-close="editWorkerModal">&times;</button>
+      </div>
+      <form id="editWorkerForm">
+        <div class="modal-body">
+          <div class="form-group">
+            <label>RFID Card ID</label>
+            <input type="text" id="editCardId" readonly disabled class="input-disabled">
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="editName">First Name <span class="required">*</span></label>
+              <input type="text" id="editName" required>
+            </div>
+            <div class="form-group">
+              <label for="editSurname">Surname <span class="required">*</span></label>
+              <input type="text" id="editSurname" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="editStatus">Account Status</label>
+            <select id="editStatus" class="form-select">
+              <option value="ACTIVE">ACTIVE (Card Enabled)</option>
+              <option value="PASSIVE">PASSIVE (Card Disabled)</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-close="editWorkerModal">Cancel</button>
+          <button type="submit" class="btn btn-primary">Update Worker</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Manual Scan Punch Modal -->
+  <div class="modal-overlay" id="manualScanModal">
+    <div class="modal-dialog glass-card">
+      <div class="modal-header">
+        <h3>Manual Attendance Punch</h3>
+        <button class="close-btn" data-close="manualScanModal">&times;</button>
+      </div>
+      <form id="manualScanForm">
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="manualCardId">Select Worker / Card ID <span class="required">*</span></label>
+            <select id="manualCardId" class="form-select" required>
+              <option value="">Select worker...</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="manualDirection">Direction <span class="required">*</span></label>
+            <select id="manualDirection" class="form-select" required>
+              <option value="IN">Clock IN</option>
+              <option value="OUT">Clock OUT</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-close="manualScanModal">Cancel</button>
+          <button type="submit" class="btn btn-primary">Log Attendance</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Notification System Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
