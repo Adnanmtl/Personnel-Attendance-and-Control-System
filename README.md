@@ -1,6 +1,6 @@
 # Personnel Attendance Control System (PACS/PDKS)
 
-A Personnel Attendance Control System (PACS/PDKS) built with **Node.js**, **Express.js**, **PostgreSQL**, and **Docker**.
+A Personnel Attendance Control System (PACS/PDKS) built with **IoT**: **ESP32**, **RFID Readers**, **LCD Display**, **Buzzer**, **Node.js**, **Express.js**, **PostgreSQL**, and **Docker**.
 
 ---
 
@@ -38,6 +38,8 @@ attendance-backend/
 
 The hardware subsystem is powered by an **ESP32 DevKit V1** microcontroller, which acts as the physical access terminal communicating with the Express backend API over **HTTP / Wi-Fi**.
 
+The .ino file is still work in progress thus there is still some code for saving the workers data locally, in general there are many improvements to be made in the entire project but regarding firmware, the microcontroller device should also have a little local storage to save the workers data locally in case of WiFi disconnection, it should also have a feature to sync the data to the database when the WiFi connection is restored.
+
 ![System Architecture Diagram](PDKS_Architecture.jpeg)
 
 ### 🔌 Component Specifications & Wiring Protocols
@@ -46,8 +48,8 @@ The hardware subsystem is powered by an **ESP32 DevKit V1** microcontroller, whi
 | :--- | :--- | :--- | :--- |
 | **Microcontroller** | **ESP32 DevKit V1** | Wi-Fi (HTTP requests) | Main controller; connects to local network, reads sensors, and sends HTTP requests to `/api/v1/request` on backend port `3000`. |
 | **RFID Reader(s)** | **MFRC522** (or PN532) | **SPI** | Reads 13.56 MHz RFID/NFC cards/tags (< 4 cm range). Configured for dual Entry (`in`) and Exit (`out`) detection. |
-| **Visual Display** | **16x2 LCD Display** | **I²C** (Address `0x27`) | Provides visual feedback (greetings, worker status, card read confirmation, error messages). |
-| **Acoustic Alert** | **Passive Buzzer** | GPIO (Pin 15) | Provides audio feedback (beep sequences for valid scans, unknown cards, and registration modes). |
+| **Visual Display** | **16x2 LCD Display** | **I²C** (Address `0x27` or `0x3F`) | Provides visual feedback (greetings, worker status, card read confirmation, error messages). |
+| **Acoustic Alert** | **Passive Buzzer** | GPIO | Provides audio feedback (beep sequences for valid scans, unknown cards, and registration modes). |
 
 ### 📊 Estimated Hardware Cost Breakdown
 
