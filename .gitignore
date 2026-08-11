@@ -18,7 +18,3 @@ Thumbs.db
 .vscode/
 .idea/
 *.swp
-
-# Temporary & Scratch files
-Untitled-*
-*.tmp
